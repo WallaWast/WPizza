@@ -73,6 +73,23 @@ namespace WPizza.Data
                    Price = 12.7M
                }
                );
+
+            modelBuilder.Entity<User>().HasData(
+               new User()
+               {
+                   Id = 1,
+                   Name = "Wallace Torres",
+                   Address = "12345 Mains St.",
+                   Phone = "+1 222-333-4444"
+               },
+               new User()
+               {
+                   Id = 2,
+                   Name = "Andreza Carvalho",
+                   Address = "12345 Mains St.",
+                   Phone = "+1 222-333-5555"
+               }
+               );
         }
 
         public DbSet<Order> Orders => Set<Order>();
@@ -80,5 +97,7 @@ namespace WPizza.Data
         public DbSet<Category> Categories => Set<Category>();
 
         public DbSet<Product> Products => Set<Product>();
+
+        public DbSet<User> Users => Set<User>();
     }
 }
