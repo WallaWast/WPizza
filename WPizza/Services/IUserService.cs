@@ -1,11 +1,11 @@
-﻿using WPizza.Domain.Entities;
+﻿using WPizza.Domain.Dto;
 
 namespace WPizza.Services
 {
     public interface IUserService
     {
-        Task<List<User>> GetAllUsersAsync();
+        Task<List<UserDto>> GetAllUsersAsync();
 
-        Task<User?> GetUserByIdAsync(int id);
+        Task<UserDto?> GetUserByIdAsync(int id);
     }
 }

@@ -27,7 +27,7 @@ namespace WPizza.Data.Repositories
 
         public async Task<List<Product>> GetAllProductsAsync()
         {
-            var products = await _context.Products.ToListAsync();
+            var products = await _context.Products.Include(x => x.Category).ToListAsync();
 
             return products;
         }

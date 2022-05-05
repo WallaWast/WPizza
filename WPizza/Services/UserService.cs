@@ -1,5 +1,5 @@
 ﻿using WPizza.Data.Repositories;
-using WPizza.Domain.Entities;
+using WPizza.Domain.Dto;
 
 namespace WPizza.Services
 {
@@ -12,18 +12,35 @@ namespace WPizza.Services
             _userRepository = userRepository;
         }
 
-        public async Task<List<User>> GetAllUsersAsync()
+        public async Task<List<UserDto>> GetAllUsersAsync()
         {
             var users = await _userRepository.GetAllUsersAsync();
 
-            return users;
+            return users.Select(x => new UserDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Phone = x.Phone,
+                Address = x.Address
+            }).ToList();
         }
 
-        public async Task<User?> GetUserByIdAsync(int id)
+        public async Task<UserDto?> GetUserByIdAsync(int id)
         {
             var user = await _userRepository.GetUserByIdAsync(id);
 
-            return user;
+            if (user == null)
+                return null;
+
+            var userDto = new UserDto()
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Address = user.Address,
+                Phone = user.Phone
+            };
+
+            return userDto;
         }
     }
 }

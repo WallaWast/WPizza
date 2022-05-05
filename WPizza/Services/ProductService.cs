@@ -1,5 +1,5 @@
 ﻿using WPizza.Data.Repositories;
-using WPizza.Domain.Entities;
+using WPizza.Domain.Dto;
 
 namespace WPizza.Services
 {
@@ -12,18 +12,47 @@ namespace WPizza.Services
             _productRepository = productRepository;
         }
 
-        public async Task<List<Product>> GetAllProductsAsync()
+        public async Task<List<ProductDto>> GetAllProductsAsync()
         {
-            var orders = await _productRepository.GetAllProductsAsync();
+            var products = await _productRepository.GetAllProductsAsync();
 
-            return orders;
+            return products.Select(product => new ProductDto()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Category = new CategoryDto()
+                {
+                    Name = product.Category.Name,
+                    Id = product.Category.Id
+                },
+                Description = product.Description,
+                ImageUrl = product.ImageUrl,
+                Price = product.Price
+            }).ToList(); ;
         }
 
-        public async Task<Product?> GetProductByIdAsync(int id)
+        public async Task<ProductDto?> GetProductByIdAsync(int id)
         {
-            var order = await _productRepository.GetProductByIdAsync(id);
+            var product = await _productRepository.GetProductByIdAsync(id);
 
-            return order;
+            if (product == null)
+                return null;
+
+            var productDto = new ProductDto()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Category = new CategoryDto()
+                {
+                    Name = product.Category.Name,
+                    Id = product.Category.Id
+                },
+                Description = product.Description,
+                ImageUrl = product.ImageUrl,
+                Price = product.Price
+            };
+
+            return productDto;
         }
     }
 }

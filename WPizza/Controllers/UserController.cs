@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WPizza.Domain.Entities;
+using WPizza.Domain.Dto;
 using WPizza.Services;
 
 namespace WPizza.Controllers
@@ -17,7 +17,7 @@ namespace WPizza.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> Get()
+        public async Task<IEnumerable<UserDto>> Get()
         {
             return await _userService.GetAllUsersAsync();
         }

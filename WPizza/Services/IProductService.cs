@@ -1,11 +1,11 @@
-﻿using WPizza.Domain.Entities;
+﻿using WPizza.Domain.Dto;
 
 namespace WPizza.Services
 {
     public interface IProductService
     {
-        Task<List<Product>> GetAllProductsAsync();
+        Task<List<ProductDto>> GetAllProductsAsync();
 
-        Task<Product?> GetProductByIdAsync(int id);
+        Task<ProductDto?> GetProductByIdAsync(int id);
     }
 }
