@@ -28,7 +28,7 @@ namespace WPizza.Services
                 Description = product.Description,
                 ImageUrl = product.ImageUrl,
                 Price = product.Price
-            }).ToList(); ;
+            }).ToList();
         }
 
         public async Task<ProductDto?> GetProductByIdAsync(int id)

@@ -27,7 +27,12 @@ namespace WPizza.Data.Repositories
 
         public async Task<List<Order>> GetAllOrdersAsync()
         {
-            var orders = await _context.Orders.ToListAsync();
+            var orders = await _context.Orders
+                                        .Include(o => o.User)
+                                        .Include(o => o.OrderProducts)
+                                        .ThenInclude(op => op.Product)
+                                        .ThenInclude(p => p.Category)
+                                        .ToListAsync();
 
             return orders;
         }

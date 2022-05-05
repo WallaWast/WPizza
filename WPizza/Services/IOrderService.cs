@@ -1,4 +1,4 @@
-﻿using WPizza.Domain.Entities;
+﻿using WPizza.Domain.Dto;
 
 namespace WPizza.Services
 {
@@ -6,9 +6,9 @@ namespace WPizza.Services
     {
         Task CreateOrderAsync(int productId, int amount, int userId);
 
-        Task<List<Order>> GetAllOrdersAsync();
+        Task<List<OrderDto>> GetAllOrdersAsync();
 
-        Task<Order?> GetOrderByIdAsync(int id);
+        Task<OrderDto?> GetOrderByIdAsync(int id);
 
         Task DeleteAsync(int id);
 

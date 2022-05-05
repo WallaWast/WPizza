@@ -6,11 +6,11 @@ namespace WPizza.Domain.Entities
     {
         public int Id { get; set; }
 
-        public Product? Product { get; set; }
+        public Product Product { get; set; } = null!;
 
         public int ProductId { get; set; }
 
-        public Order? Order { get; set; }
+        public Order Order { get; set; } = null!;
 
         public int OrderId { get; set; }
 

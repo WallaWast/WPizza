@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WPizza.Domain.Entities;
+using WPizza.Domain.Dto;
 using WPizza.Services;
 
 namespace WPizza.Controllers
@@ -17,7 +17,7 @@ namespace WPizza.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Order>> Get()
+        public async Task<IEnumerable<OrderDto>> Get()
         {
             return await _orderService.GetAllOrdersAsync();
         }

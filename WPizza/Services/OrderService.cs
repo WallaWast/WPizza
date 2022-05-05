@@ -1,4 +1,5 @@
 ﻿using WPizza.Data.Repositories;
+using WPizza.Domain.Dto;
 using WPizza.Domain.Entities;
 
 namespace WPizza.Services
@@ -49,18 +50,81 @@ namespace WPizza.Services
             await _orderRepository.AddAsync(order);
         }
 
-        public async Task<List<Order>> GetAllOrdersAsync()
+        public async Task<List<OrderDto>> GetAllOrdersAsync()
         {
             var orders = await _orderRepository.GetAllOrdersAsync();
 
-            return orders;
+            return orders.Select(order => new OrderDto()
+            {
+                Id = order.Id,
+                TotalValue = order.TotalValue,
+                User = new UserDto()
+                {
+                    Id = order.User.Id,
+                    Name = order.User.Name,
+                    Address = order.User.Address,
+                    Phone = order.User.Phone
+                },
+                OrderProducts =
+                    order.OrderProducts.Select(op => new OrderProductDto()
+                    {
+                        Price = op.Price,
+                        Quantity = op.Quantity,
+                        Product = new ProductDto()
+                        {
+                            Id = op.Product.Id,
+                            Price = op.Product.Price,
+                            Description = op.Product.Description,
+                            Name = op.Product.Name,
+                            Category = new CategoryDto()
+                            {
+                                Id = op.Product.Category.Id,
+                                Name = op.Product.Category.Name
+                            }
+                        }
+                    }).ToList()
+            }).ToList(); ;
         }
 
-        public async Task<Order?> GetOrderByIdAsync(int id)
+        public async Task<OrderDto?> GetOrderByIdAsync(int id)
         {
             var order = await _orderRepository.GetOrderByIdAsync(id);
 
-            return order;
+            if (order == null)
+                return null;
+
+            var orderDto = new OrderDto()
+            {
+                Id = order.Id,
+                TotalValue = order.TotalValue,
+                User = new UserDto()
+                {
+                    Id = order.User.Id,
+                    Name = order.User.Name,
+                    Address = order.User.Address,
+                    Phone = order.User.Phone
+                },
+                OrderProducts =
+                    order.OrderProducts.Select(op => new OrderProductDto()
+                    {
+                        Price = op.Price,
+                        Quantity = op.Quantity,
+                        Product = new ProductDto()
+                        {
+                            Id = op.Product.Id,
+                            Price = op.Product.Price,
+                            Description = op.Product.Description,
+                            Name = op.Product.Name,
+                            Category = new CategoryDto()
+                            {
+                                Id = op.Product.Category.Id,
+                                Name = op.Product.Category.Name
+                            }
+                        }
+                    }).ToList()
+            };
+
+            return orderDto;
         }
 
         public async Task UpdateAsync(int id, decimal value)
