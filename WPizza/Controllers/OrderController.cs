@@ -30,9 +30,9 @@ namespace WPizza.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, decimal orderValue)
+        public async Task<IActionResult> Put(int id, int productId, int amount)
         {
-            await _orderService.UpdateAsync(id, orderValue);
+            await _orderService.UpdateAsync(id, productId, amount);
             return Ok();
         }
 

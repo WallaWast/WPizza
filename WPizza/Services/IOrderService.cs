@@ -12,6 +12,6 @@ namespace WPizza.Services
 
         Task DeleteAsync(int id);
 
-        Task UpdateAsync(int id, decimal value);
+        Task UpdateAsync(int id, int productId, int amount);
     }
 }

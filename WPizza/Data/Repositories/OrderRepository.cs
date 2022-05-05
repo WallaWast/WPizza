@@ -39,7 +39,10 @@ namespace WPizza.Data.Repositories
 
         public async Task<Order?> GetOrderByIdAsync(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders
+                                        .Include(o => o.OrderProducts)
+                                        .ThenInclude(op => op.Product)
+                                        .FirstOrDefaultAsync(o => o.Id == id);
 
             return order;
         }

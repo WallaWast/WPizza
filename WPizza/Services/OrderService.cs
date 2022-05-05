@@ -127,13 +127,29 @@ namespace WPizza.Services
             return orderDto;
         }
 
-        public async Task UpdateAsync(int id, decimal value)
+        public async Task UpdateAsync(int id, int productId, int amount)
         {
             var order = await _orderRepository.GetOrderByIdAsync(id);
 
             if (order != null)
             {
-                order.TotalValue = value;
+                var product = await _productRepository.GetProductByIdAsync(productId);
+
+                if (product == null)
+                    return;
+
+                var orderProduct = new OrderProduct()
+                {
+                    Price = product.Price * amount,
+                    Quantity = amount,
+                    ProductId = productId,
+                    Product = product
+                };
+
+                order.OrderProducts.Add(orderProduct);
+
+                order.TotalValue = order.OrderProducts.Sum(op => op.Price);
+
                 await _orderRepository.UpdateAsync(order);
             }
         }
