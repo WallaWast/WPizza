@@ -99,5 +99,7 @@ namespace WPizza.Data
         public DbSet<Product> Products => Set<Product>();
 
         public DbSet<User> Users => Set<User>();
+
+        public DbSet<OrderProduct> OrderProducts => Set<OrderProduct>();
     }
 }

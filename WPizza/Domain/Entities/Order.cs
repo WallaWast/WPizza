@@ -12,5 +12,7 @@ namespace WPizza.Domain.Entities
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalValue { get; set; }
+
+        public List<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
     }
 }
