@@ -7,13 +7,45 @@ namespace WPizza.Services
     {
         private readonly IOrderRepository _orderRepository;
 
-        public OrderService(IOrderRepository orderRepository)
+        private readonly IProductRepository _productRepository;
+
+        private readonly IUserRepository _userRepository;
+
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, IUserRepository userRepository)
         {
             _orderRepository = orderRepository;
+            _productRepository = productRepository;
+            _userRepository = userRepository;
         }
 
-        public async Task CreateOrderAsync(Order order)
+        public async Task CreateOrderAsync(int productId, int amount, int userId)
         {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null)
+                return;
+
+            var product = await _productRepository.GetProductByIdAsync(productId);
+
+            if (product == null)
+                return;
+
+            var orderProduct = new OrderProduct()
+            {
+                Price = product.Price * amount,
+                Quantity = amount,
+                ProductId = productId,
+                Product = product
+            };
+
+            var order = new Order()
+            {
+                UserId = user.Id,
+                User = user,
+                OrderProducts = new List<OrderProduct> { orderProduct },
+                TotalValue = orderProduct.Price
+            };
+
             await _orderRepository.AddAsync(order);
         }
 

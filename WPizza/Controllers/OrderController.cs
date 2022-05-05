@@ -23,14 +23,9 @@ namespace WPizza.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(decimal price)
+        public async Task<IActionResult> Post(int productId, int amount, int userId)
         {
-            var order = new Order()
-            {
-                TotalValue = price
-            };
-
-            await _orderService.CreateOrderAsync(order);
+            await _orderService.CreateOrderAsync(productId, amount, userId);
             return Ok();
         }
 

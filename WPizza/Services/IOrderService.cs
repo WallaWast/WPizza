@@ -4,7 +4,7 @@ namespace WPizza.Services
 {
     public interface IOrderService
     {
-        Task CreateOrderAsync(Order order);
+        Task CreateOrderAsync(int productId, int amount, int userId);
 
         Task<List<Order>> GetAllOrdersAsync();
 
